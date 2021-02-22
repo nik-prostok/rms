@@ -1,8 +1,8 @@
 import express, { Application } from "express";
 import bodyParser from "body-parser";
 
-import connect from "../utils/connect";
-import appRouter from "./app.router";
+import connect from "./utils/connect";
+import appRouter from "./src/app.router";
 
 const app: Application = express();
 const port: number = 5000 || process.env.PORT;
