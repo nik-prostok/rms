@@ -1,19 +1,6 @@
-import mongoose from "mongoose";
+import {Sequelize} from 'sequelize';
 
 export default (db: string) => {
-    const connect = () => {
-        console.log("Connect to DB...")
-        mongoose
-            .connect(db, { useNewUrlParser: true })
-            .then(() => {
-                return console.log(`Successfully connected to ${db}`);
-            })
-            .catch(error => {
-                console.log("Error connecting to database: ", error);
-                return process.exit(1);
-            });
-    };
-    connect();
-
-    mongoose.connection.on("disconnected", connect);
+    const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
+    
 };
