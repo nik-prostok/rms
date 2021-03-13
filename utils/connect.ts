@@ -1,6 +1,11 @@
 import {Sequelize} from 'sequelize';
 
-export default (db: string) => {
-    const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
-    
+export default async (dbURI: string) => {
+    const sequelize = new Sequelize(dbURI);
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
 };

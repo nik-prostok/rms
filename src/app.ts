@@ -7,12 +7,12 @@ import appRouter from "./app.router";
 const app: Application = express();
 const port: number = 5000 || process.env.PORT;
 
-const db: string = "mongodb+srv://shop:ghjtyubnm@devcluster.taxgx.mongodb.net/RMS?retryWrites=true&w=majority"
+const dbURI: string = "postgres://oshlnnxd:gYEWtp3iTNfg5lquBBTremkLqMOuZfSE@hattie.db.elephantsql.com:5432/oshlnnxd"
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-connect(db);
+connect(dbURI);
 
 app.use('/api', appRouter)
 
