@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import TargetObjects from "./models/TargetObjects.schema";
+import TargetObjects from "./TargetObjects.schema";
 
 export const allTargetObjects = (req: Request, res: Response) => {
     const targetObjects = TargetObjects.find((err: any, targetObjects: any) => {
