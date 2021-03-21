@@ -20,3 +20,18 @@ export const addPiM= (req: Request, res: Response) => {
         }
     });
 };
+
+export interface GetPimsByObjectId {
+    targetObjectId: string;
+}
+export const getPimsByObjectIdWithModes = async (req: Request<null, null, null, GetPimsByObjectId>, res: Response) => {
+    try {
+        const targetObjectId = req.query.targetObjectId;
+        const pims = await PiMs
+            .find({targetObjectId: targetObjectId})
+            .populate('modes');
+        res.send(pims);
+    } catch (err) {
+        res.send(err);
+    }
+}

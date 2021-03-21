@@ -5,10 +5,12 @@ export interface PiMInterface extends Document {
     namePiM: string;
     description?: string;
     modes: ModeDTO[];
+    targetObjectId: string;
 }
 
 const PiMSchema: Schema = new Schema({
     namePiM: { type: String, required: true },
+    targetObjectId: {type: String, required: true},
     modes: [{ type: Schema.Types.ObjectId, ref: 'Modes' }],
     description: { type: String }
 });
