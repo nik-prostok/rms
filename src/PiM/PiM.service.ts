@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import PiMs from "./PiM.schema";
 
+export const filesPath = 'C:\\Users\\nik\\Desktop\\uploads\\';
+
 export const getPiMWithModes = async (req: Request, res: Response) => {
     try {
         const pims = await PiMs.find().populate('modes')
@@ -10,15 +12,31 @@ export const getPiMWithModes = async (req: Request, res: Response) => {
     }
 };
 
-export const addPiM= (req: Request, res: Response) => {
-    const PiM = new PiMs(req.body);
-    PiM.save((err: any) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(PiM);
+export const addPiM = async (req: Request, res: Response) => {
+    try {
+        let sampleFile;
+        let uploadPath;
+        if (!req.files || Object.keys(req.files).length === 0) {
+            throw ('No files were uploaded.');
         }
-    });
+
+        sampleFile = req.files.pimDoc;
+        // @ts-ignore
+        uploadPath = filesPath + sampleFile.name;
+
+        // @ts-ignore
+        await sampleFile.mv(uploadPath);
+        await new PiMs({
+            namePiM: req.body.namePiM,
+            // @ts-ignore
+            nameDoc: sampleFile.name,
+            targetObjectId: req.body.targetObjectId,
+        }).save()
+        res.send('File uploaded!');
+    } catch (err) {
+        console.log(err)
+        res.status(500).send(err);
+    }
 };
 
 export interface GetPimsByObjectId {
