@@ -50,6 +50,7 @@ export const addTechTask = async (req: Request, res: Response) => {
 export interface GetTechTaskPdfReq {
     techTaskId: string;
 }
+
 export const getPdfTechTask = async (req: Request<null,null,null,GetTechTaskPdfReq>, res: Response) => {
     try {
         const techTaskId = req.query.techTaskId;

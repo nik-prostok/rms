@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import PiMs from "./PiM.schema";
+import path from "path";
 
 export const filesPath = 'C:\\Users\\nik\\Desktop\\uploads\\';
 
@@ -49,6 +50,23 @@ export const getPimsByObjectIdWithModes = async (req: Request<null, null, null, 
             .find({targetObjectId: targetObjectId})
             .populate('modes');
         res.send(pims);
+    } catch (err) {
+        res.send(err);
+    }
+}
+
+export interface GetPimPdfReq {
+    pimId: string;
+}
+export const getPdfPim = async (req: Request<null,null,null,GetPimPdfReq>, res: Response) => {
+    try {
+        const pimId = req.query.pimId;
+        const pim = await PiMs
+            .findOne({_id: pimId})
+        console.log(pim)
+        if (pim) {
+            res.sendFile(path.join(filesPath + pim.nameDoc))
+        } else throw('File not found!')
     } catch (err) {
         res.send(err);
     }
